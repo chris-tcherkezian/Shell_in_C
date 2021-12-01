@@ -1,31 +1,10 @@
-#include <sys/wait.h>
+//#include <sys/wait.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-/*
-    Basic Loop of a Shell:
-    Read the command from standard input
-    Parse the command string into a programs and arguments
-    Execute the parsed command
-*/
-void lsh_loop(void) {
-    char *line;
-    char **args;
-    int status;
-    
-    do {
-        printf("> ");
-        line = lsh_read_line();
-        args = lsh_split_line(line);
-        status = lsh_execute(args);
-
-        free(line);
-        free(args);
-    } while (status);
-}
 
 // Reading a line
 
@@ -199,6 +178,28 @@ int lsh_execute(char **args) {
     }
 
     return lsh_launch(args);
+}
+
+/*
+    Basic Loop of a Shell:
+    Read the command from standard input
+    Parse the command string into a programs and arguments
+    Execute the parsed command
+*/
+void lsh_loop(void) {
+    char *line;
+    char **args;
+    int status;
+    
+    do {
+        printf("> ");
+        line = lsh_read_line();
+        args = lsh_split_line(line);
+        status = lsh_execute(args);
+
+        free(line);
+        free(args);
+    } while (status);
 }
 
 // main code driver
