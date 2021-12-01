@@ -1,4 +1,4 @@
-//#include <sys/wait.h>
+#include <sys/wait.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -81,7 +81,7 @@ char **lsh_split_line(char *line) {
 
 //launching the shell process
 int lsh_launch(char **args) {
-    pid_t pid, wpid;
+    pid_t pid;
     int status;
 
     pid = fork();
@@ -97,7 +97,7 @@ int lsh_launch(char **args) {
     } else {
     // Parent process
     do {
-      wpid = waitpid(pid, &status, WUNTRACED);
+      waitpid(pid, &status, WUNTRACED);
     } while (!WIFEXITED(status) && !WIFSIGNALED(status));
   }
 
